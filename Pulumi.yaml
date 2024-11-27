@@ -1,0 +1,30 @@
+name: azure-budget-project  # Name of your Pulumi project
+runtime: yaml  # Specify YAML as the runtime
+
+resources:
+  azureBudget:
+    type: azure-native:consumption:Budget
+    properties:
+      scope: /subscriptions/5bb64e70-0225-40e2-b87c-ede62684f322
+      amount: 1
+      category: Cost  # Specifies the budget category (Cost or Usage)
+      timePeriod:
+        startDate: 2024-11-01
+        endDate: 2025-11-01
+      timeGrain: Monthly  # Reset period for the budget
+      notifications:
+        actual:
+          enabled: true
+          operator: GreaterThan
+          threshold: 50  # Threshold percentage of the budget
+          contactEmails:
+            - wi22b112@technikum-wien.at
+        forecasted:
+          enabled: true
+          operator: GreaterThan
+          threshold: 50
+          contactEmails:
+            - wi22b112@technikum-wien.at
+
+# verification command
+# az consumption budget list
